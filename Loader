@@ -1,0 +1,43 @@
+local Messages = {
+	"You are whitelisted, proceeding to hook."
+	"You are not whitelisted, proceeding to Close. [ERR: 001]"
+	"The game bugged and doughHook detected an inminent ban, safe shutdowning..."
+	"Your exploit is not supported by doughHook, or it could be soon, we recommend you using KRNL or Synapse."
+}
+local Services = {
+	StarterGui = game:GetService("StarterGui")
+   MarketPlaceService = game:GetService("MarketPlaceService")
+}
+
+function sendMessage(input)
+   if is_synapse_function then
+   	messagebox(Messages[input], "[ doughHook ]", 0)
+   else
+   	Services.StarterGui:SetCore("SendNotification",{
+   		Title = "[ doughHook ]"
+   		Text = Messages[input]
+   	})
+   end
+end
+
+function checkForProduct()
+   if game.Players.LocalPlayer:IsFriendsWith(1760553005) then
+      return true
+   else
+      return false
+   end
+end
+
+task.spawn(function()
+    local check = checkForProduct()
+    if check then
+      sendMessage(1)
+      task.wait(1)
+      loadstring(game:HttpGet("https://raw.githubusercontent.com/cosmicAdventure/cosmicPrograms/main/Criminality", true))()
+
+   else
+      sendMessage(2)
+      task.wait(3)
+      game:Shutdown()
+   end
+end)
